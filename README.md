@@ -135,12 +135,119 @@ obj.printCQueue()
 
 2 Класс:
 
+```
+class Node:
+    def __init__(self, key, data):
+        self.key = key
+        self.data = data
+        self.next = None
 
 
+class LinkedList:
+    def __init__(self):
+        self.head = None
 
+    def is_empty(self):
+        return self.head is None
+
+    def length(self):
+        length = 0
+
+        if self.head is None:
+            return length
+
+        current = self.head
+        length = 1
+        while current.next != self.head and current.next != self.head.next:
+            length += 1
+            current = current.next
+
+        return length
+
+    def insert_first(self, key, data):
+        new_node = Node(key, data)
+
+        if self.is_empty():
+            self.head = new_node
+            new_node.next = self.head
+        else:
+            current = self.head
+            while current.next != self.head:
+                current = current.next
+            current.next = new_node
+            new_node.next = self.head
+            self.head = new_node
+
+    def delete_first(self):
+        if self.is_empty():
+            return None
+
+        temp = self.head
+        if self.head.next == self.head:
+            self.head = None
+        else:
+            current = self.head
+            while current.next != self.head:
+                current = current.next
+            current.next = self.head.next
+            self.head = self.head.next
+
+        return temp
+
+    def print_list(self):
+        if self.is_empty():
+            print("[]")
+            return
+
+        current = self.head
+        print("[", end=" ")
+        while True:
+            print(f"({current.key},{current.data})", end=" ")
+            current = current.next
+            if current == self.head:
+                break
+        print("]")
+
+
+# Создание и использование связанного списка
+linked_list = LinkedList()
+linked_list.insert_first(1, 10)
+linked_list.insert_first(2, 20)
+linked_list.insert_first(3, 30)
+linked_list.insert_first(4, 1)
+linked_list.insert_first(5, 40)
+linked_list.insert_first(6, 56)
+
+print("Original List: ")
+linked_list.print_list()
+
+while not linked_list.is_empty():
+    temp = linked_list.delete_first()
+    print("\nDeleted value:", f"({temp.key},{temp.data})", end=" ")
+
+print("\nList after deleting all items: ")
+linked_list.print_list()
+```
+Суть: Использовался связный список для реализации 
+Кольцевой (циклический, замкнутый) связный список — это разновидность связного списка, при которой первый элемент указывает на последний, а последний — на первый. Кольцевой (циклический, замкнутый) связный список можно сделать как из односвязного (однонаправленного), так и из двусвязного (двунаправленного) списка.
+
+Он создает два класса: Node (узел) и LinkedList (связанный список). Класс Node используется для создания узлов списка, а класс LinkedList представляет собой основной функционал списка, такой как вставка элемента в начало списка, удаление первого элемента списка и печать списка.
+­
+Плюсы:
+
++ Реализуетиклическую односвязную реализацию связанного списка, что может быть полезным в определенных сценариях.
++ Методы вставки, удаления и печи списка реализованы корректно и эффективно.
+­
+Минусы:
+- Использование дополнительной памяти: Связанный список требует допительной памяти для хранения указателей на следующий и предыдущий элементы, что может быть излишним для циклического буфера обмена, особенно при больших объемах данных.
+- Сложность доступа к элементам Для доступа к конкретному элементу в связанном списке требуется перебирать список от начала до нужного элемента, что может быть неэффективно для операций вставки, удаления или поиска элементов
+
+  
 Вопрос №3
 
 На языке Python предложить алгоритм, который быстрее всего (по процессорным тикам) отсортирует данный ей массив чисел. Массив может быть любого размера со случайным порядком чисел (в том числе и отсортированным). Объяснить, почему вы считаете, что функция соответствует заданным критериям.
+
+
 Можно предположить 2 варианта: Один, наверное, то что и нужно предложить, обычно про них говорят на первых курсах в университете - и это Быстрая сортировка. Почему быстра: Почему я считаю QuickSort самым быстрым алгоритмом для сортировки в данном случае?
 
     •	QuickSort имеет среднюю временную сложность O(n log n) и лучшую временную сложность O(n log n) в среднем случае.
